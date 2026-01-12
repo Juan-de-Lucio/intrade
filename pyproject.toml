@@ -1,0 +1,20 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "intrade"
+version = "0.1.2"
+description = "The intrade Python package provides a unified toolkit for international trade empirical analysis."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+authors = [{ name = "Juan de Lucio & Francisco Requena", email = "Juan.deLucio@uah.es" }]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/Juan-de-Lucio/REPO"
+Issues = "https://github.com/Juan-de-Lucio/REPO/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/intrade"]
