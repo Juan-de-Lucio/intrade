@@ -41,7 +41,7 @@ The package aims to complement existing tools such as the R packages  `decompr` 
 
 Flow chart
 
-![Figure 1: Flow chart InTrade](/assets/img/diag_v010.png)
+![Figure 1: Flow chart InTrade](assets/img/diag_v010.PNG)
 
 
 Main dependencies
