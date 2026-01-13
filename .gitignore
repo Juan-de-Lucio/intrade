@@ -17,3 +17,10 @@ dist/
 # IDE / Editors
 .vscode/
 .idea/
+
+.pypirc
+.ipynb_checkpoints/
+site/
+dist/
+build/
+*.egg-info/

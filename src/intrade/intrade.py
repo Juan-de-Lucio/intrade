@@ -2108,7 +2108,106 @@ def obj_Grav_panel(dicc):
 
 
 # %% [markdown]
-# ## WWZ - Wang–Wei–Zhu (2018)
+# ## KWW Koopman-Wang–Wei (2014)
+
+# %%
+def KWW(io, agg ="", shares: bool = False) -> pd.DataFrame:
+    """
+    Aggregate the detailed WWZ decomposition into KWW-style components.
+
+    This function takes the full Wang–Wei–Zhu (WWZ) decomposition (as
+    returned by `WWZ(io)`) and groups its 16 detailed components into
+    a smaller set of economically meaningful categories in the
+    Koopman–Wang–Wei (KWW) style.
+
+    Parameters
+    ----------
+    io : dict
+        World input–output object to be passed to `WWZ(io)`. It must be
+        compatible with your `WWZ` function (i.e. `WWZ(io)` returns a
+        DataFrame with the 16 WWZ components as columns).
+    shares : bool, default False
+        - If False: return levels (same units as the WWZ decomposition).
+        - If True:  return shares (percent) of each KWW component in
+                    total gross exports for each origin–destination
+                    combination. In that case, the `Tot` column will
+                    equal 100 for every row.
+
+    Returns
+    -------
+    KWW_c : pandas.DataFrame
+        DataFrame with the same index as `WWZ(io)` (typically
+        origin-country-sector × destination-country) and columns:
+
+        - "DVA_FIN"   : domestic VA in final goods exports
+        - "DVA_INT"   : domestic VA in intermediate exports absorbed
+                        by the direct importer
+        - "DVA_INTrex": domestic VA in intermediate exports that is
+                        re-exported (third-country use)
+        - "RDV_FIN"   : returned domestic VA in final goods
+        - "RDV_INT"   : returned domestic VA in intermediates
+        - "DDC"       : double-counted domestic content
+        - "FVA_FIN"   : foreign VA in final goods exports
+        - "FVA_INT"   : foreign VA in intermediate exports
+        - "FDC"       : foreign double-counting
+        - "Tot"       : total (sum of all previous KWW components);
+                        if `shares=True`, Tot = 100 for every row.
+    """
+
+    # 1) Compute the detailed WWZ decomposition (16 components)
+    WWZ_c = WWZ(io,agg)  # assumes WWZ(io) → DataFrame (rows = flows, cols = WWZ terms)
+
+    # 2) Mapping from WWZ components (columns) to KWW-style aggregates
+    #    (you can switch to the T1–T9 mapping by replacing this dict)
+    mapping = {
+        "DVA_FIN":    "DVA_FIN",
+        "DVA_INT":    "DVA_INT",
+        "DVA_INTrex1":"DVA_INT",
+        "DVA_INTrex2":"DVA_INTrex",
+        "DVA_INTrex3":"DVA_INTrex",
+        "RDV_FIN1":   "RDV_FIN",
+        "RDV_FIN2":   "RDV_FIN",
+        "RDV_INT":    "RDV_INT",
+        "DDC_FIN":    "DDC",
+        "DDC_INT":    "DDC",
+        "MVA_FIN":    "FVA_FIN",
+        "OVA_FIN":    "FVA_FIN",
+        "MVA_INT":    "FVA_INT",
+        "OVA_INT":    "FVA_INT",
+        "MDC":        "FDC",
+        "ODC":        "FDC",
+    }
+
+    # 3) Group WWZ columns by the mapping and sum them → KWW components
+    #    We transpose to group by columns, then transpose back.
+    KWW_c = WWZ_c.T.groupby(WWZ_c.columns.map(mapping)).sum().T
+
+    # 4) Add total (sum of all KWW components per flow)
+    KWW_c["Tot"] = KWW_c.sum(axis=1)
+
+    # 5) Optionally convert to percentage shares
+    if shares:
+        # Divide each column by the sum of *all KWW components except Tot*
+        # so that Tot becomes 100 for every row.
+        denom = KWW_c.iloc[:, :-1].sum(axis=1)
+        KWW_c = KWW_c.div(denom, axis=0) * 100
+
+    KWW_c = KWW_c[['DVA_FIN', 'DVA_INT', 'DVA_INTrex', 'RDV_FIN', 'RDV_INT', 'DDC', 'FVA_FIN', 'FVA_INT', 'FDC', 'Tot']]
+
+    print("KWW Done!")
+    
+    return KWW_c
+
+
+
+
+
+
+# %%
+
+
+# %% [markdown]
+# ## WWZ Wang–Wei–Zhu (2018)
 
 # %%
 # No funciona solo obtengo unos cuantos componentes
@@ -2523,110 +2622,11 @@ def WWZ(wio, agg: str = ""):
 
 
 # %% [markdown]
-# ## KWW
-
-# %%
-def KWW(io, agg ="", shares: bool = False) -> pd.DataFrame:
-    """
-    Aggregate the detailed WWZ decomposition into KWW-style components.
-
-    This function takes the full Wang–Wei–Zhu (WWZ) decomposition (as
-    returned by `WWZ(io)`) and groups its 16 detailed components into
-    a smaller set of economically meaningful categories in the
-    Koopman–Wang–Wei (KWW) style.
-
-    Parameters
-    ----------
-    io : dict
-        World input–output object to be passed to `WWZ(io)`. It must be
-        compatible with your `WWZ` function (i.e. `WWZ(io)` returns a
-        DataFrame with the 16 WWZ components as columns).
-    shares : bool, default False
-        - If False: return levels (same units as the WWZ decomposition).
-        - If True:  return shares (percent) of each KWW component in
-                    total gross exports for each origin–destination
-                    combination. In that case, the `Tot` column will
-                    equal 100 for every row.
-
-    Returns
-    -------
-    KWW_c : pandas.DataFrame
-        DataFrame with the same index as `WWZ(io)` (typically
-        origin-country-sector × destination-country) and columns:
-
-        - "DVA_FIN"   : domestic VA in final goods exports
-        - "DVA_INT"   : domestic VA in intermediate exports absorbed
-                        by the direct importer
-        - "DVA_INTrex": domestic VA in intermediate exports that is
-                        re-exported (third-country use)
-        - "RDV_FIN"   : returned domestic VA in final goods
-        - "RDV_INT"   : returned domestic VA in intermediates
-        - "DDC"       : double-counted domestic content
-        - "FVA_FIN"   : foreign VA in final goods exports
-        - "FVA_INT"   : foreign VA in intermediate exports
-        - "FDC"       : foreign double-counting
-        - "Tot"       : total (sum of all previous KWW components);
-                        if `shares=True`, Tot = 100 for every row.
-    """
-
-    # 1) Compute the detailed WWZ decomposition (16 components)
-    WWZ_c = WWZ(io,agg)  # assumes WWZ(io) → DataFrame (rows = flows, cols = WWZ terms)
-
-    # 2) Mapping from WWZ components (columns) to KWW-style aggregates
-    #    (you can switch to the T1–T9 mapping by replacing this dict)
-    mapping = {
-        "DVA_FIN":    "DVA_FIN",
-        "DVA_INT":    "DVA_INT",
-        "DVA_INTrex1":"DVA_INT",
-        "DVA_INTrex2":"DVA_INTrex",
-        "DVA_INTrex3":"DVA_INTrex",
-        "RDV_FIN1":   "RDV_FIN",
-        "RDV_FIN2":   "RDV_FIN",
-        "RDV_INT":    "RDV_INT",
-        "DDC_FIN":    "DDC",
-        "DDC_INT":    "DDC",
-        "MVA_FIN":    "FVA_FIN",
-        "OVA_FIN":    "FVA_FIN",
-        "MVA_INT":    "FVA_INT",
-        "OVA_INT":    "FVA_INT",
-        "MDC":        "FDC",
-        "ODC":        "FDC",
-    }
-
-    # 3) Group WWZ columns by the mapping and sum them → KWW components
-    #    We transpose to group by columns, then transpose back.
-    KWW_c = WWZ_c.T.groupby(WWZ_c.columns.map(mapping)).sum().T
-
-    # 4) Add total (sum of all KWW components per flow)
-    KWW_c["Tot"] = KWW_c.sum(axis=1)
-
-    # 5) Optionally convert to percentage shares
-    if shares:
-        # Divide each column by the sum of *all KWW components except Tot*
-        # so that Tot becomes 100 for every row.
-        denom = KWW_c.iloc[:, :-1].sum(axis=1)
-        KWW_c = KWW_c.div(denom, axis=0) * 100
-
-    KWW_c = KWW_c[['DVA_FIN', 'DVA_INT', 'DVA_INTrex', 'RDV_FIN', 'RDV_INT', 'DDC', 'FVA_FIN', 'FVA_INT', 'FDC', 'Tot']]
-
-    print("KWW Done!")
-    
-    return KWW_c
-
-
-
-
-
+# ## BM Borin-Mancini (2023)
 
 # %%
 
-
-# %% [markdown]
-# ## Borin & Mancini 2023
-
-# %%
-
-def BM_2023(wio: dict, shares: bool = False, agg: str | None = None) -> pd.DataFrame:
+def BM(wio: dict, shares: bool = False, agg: str | None = None) -> pd.DataFrame:
     """
     Borin & Mancini–style value-added export decomposition (strict W–B–E version).
 
@@ -2753,10 +2753,10 @@ def BM_2023(wio: dict, shares: bool = False, agg: str | None = None) -> pd.DataF
 
 
 # %% [markdown]
-# ## Borin & Mancini 2025 Trade
+# ## BMT Borin-Mancini-Taglioni (2025) Trade
 
 # %%
-def BM_2025_trade(io, selector: str = "all_all", measures: bool = True) -> pd.DataFrame:
+def BMT_trade(io, selector: str = "all_all", measures: bool = True) -> pd.DataFrame:
     """
     BM2025 tripartite GVC trade decomposition (todo integrado, sin dependencias externas).
 
@@ -3107,10 +3107,10 @@ def BM_2025_trade(io, selector: str = "all_all", measures: bool = True) -> pd.Da
 
 
 # %% [markdown]
-# ## Borin & Mancini 2025 Output
+# ## BMT Borin-Mancini-Taglioni (2025) Output
 
 # %%
-def BM_2025_output(io, selector: str = "all_all", measures: bool = True) -> pd.DataFrame:
+def BMT_output(io, selector: str = "all_all", measures: bool = True) -> pd.DataFrame:
     """
     BM2025 — Output-based GVC decomposition (single entry point, InTrade-style).
 
