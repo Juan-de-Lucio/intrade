@@ -1,0 +1,1274 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Gravity & Input–Output & Other Tools in Python">
+      
+      
+        <meta name="author" content="Juan José de Lucio (UAH); Francisco Requena (UV)">
+      
+      
+      
+        <link rel="prev" href="../load_test/">
+      
+      
+        <link rel="next" href="../load_eora/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>load_ADB - InTrade Python library manual</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#load_adb" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="InTrade Python library manual" class="md-header__button md-logo" aria-label="InTrade Python library manual" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            InTrade Python library manual
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              load_ADB
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="InTrade Python library manual" class="md-nav__button md-logo" aria-label="InTrade Python library manual" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    InTrade Python library manual
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intrade-package/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0- InTrade-package
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DLF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1- Data Loading Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../load_test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    load_Test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    load_ADB
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../load_eora/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    load_EORA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../load_figaro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    load_FIGARO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../load_gloria/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    load_GLORIA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../load_tiva/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    load_TIVA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../load_wiod/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    load_WIOD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aggregate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    aggregate
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2- Create Objects Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../obj_io/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    obj_IO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../obj_grav/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    obj_Grav
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../obj_grav_panel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    obj_Grav_panel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IOAF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.A- Input Output Analysis Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../KWW/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KWW
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WWZ/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WWZ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BM/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bmt_trade/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BMT_trade
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bmt_output/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BMT_output
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../stream/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    stream
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GAF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.B- Gravity Analysis Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../struc_grav_cf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    struc_grav_cf
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../struc_grav_incre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    struc_grav_incre
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../struc_grav_asif/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    struc_grav_asif
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../struc_grav_inout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    struc_grav_inout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../grav_panel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    grav_panel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solve_system_Ti/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    solve_system_Ti
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<p><a id="load_adb"></a></p>
+<h1 id="load_adb">load_ADB<a class="headerlink" href="#load_adb" title="Permanent link">&para;</a></h1>
+<hr />
+<p><strong>Description</strong></p>
+<p><code>load_ADB</code> reads an Asian Development Bank (ADB) multi-regional input–output (MRIO) table from an Excel file, performs basic cleaning, infers the main MRIO dimensions (number of countries, sectors, and final-demand components), and converts ADB country codes to ISO3 / ISO3-like codes (including regional aggregates such as RoW, etc.).</p>
+<p>It returns a convenient dictionary with the cleaned matrix and basic dimension metadata, ready to be passed to downstream MRIO / value-added decomposition functions.</p>
+<hr />
+<p><strong>Usage</strong></p>
+<p><code>load_ADB(dire, year, typ="LAC")</code></p>
+<hr />
+<p><strong>Arguments</strong></p>
+<p><code>load_ADB(dire, year, typ="LAC")</code></p>
+<ul>
+<li>
+<p><code>dire</code> : <code>str</code> or <code>pathlib.Path</code>
+  Directory where the ADB Excel files are stored. It should normally include the trailing separator, e.g. <code>"path/to/ADB/"</code>.</p>
+</li>
+<li>
+<p><code>year</code> : <code>int</code>
+  Reference year of the ADB MRIO to load. Valid years depend on <code>typ</code> and on which ADB files are present in <code>dire</code>, for example:</p>
+</li>
+<li><code>"LAC"</code>: 2007, 2011, 2017 (Latin American MRIO releases used here).</li>
+<li><code>"CUR-62"</code>: 2000, 2007, and annual series after 2007 according to file naming conventions.</li>
+<li>
+<p><code>"CUR-72"</code>: any year for which an <code>ADB-MRIO-{year}*.xlsx</code> file exists in <code>dire</code>.</p>
+</li>
+<li>
+<p><code>typ</code> : <code>{"LAC", "CUR-62", "CUR-72"}</code>, default <code>"LAC"</code>
+  Variant of the ADB MRIO to load:</p>
+</li>
+<li><code>"LAC"</code>: Latin American MRIO, with explicit Latin American region codes (e.g. RoLAC).</li>
+<li><code>"CUR-62"</code>: “Current” 62-region MRIO (standard ADB release).</li>
+<li><code>"CUR-72"</code>: “Current” 72-region MRIO (extended ADB release).</li>
+</ul>
+<hr />
+<p><strong>Details</strong></p>
+<p>The function executes the following steps:</p>
+<ol>
+<li><strong>Select and read the Excel file</strong></li>
+<li>For <code>typ="LAC"</code> and <code>typ="CUR-62"</code>, the file name is built explicitly from <code>year</code> (e.g. <code>"ADB-MRIO-LAC-2017_Mar2022-2.xlsx"</code>, <code>"ADB-MRIO62-2018_Dec2022.xlsx"</code>).</li>
+<li>For <code>typ="CUR-72"</code>, the function searches <code>dire</code> using a glob pattern (<code>"ADB-MRIO-{year}*.xlsx"</code>) and reads the first match.</li>
+<li>
+<p>In all cases, it reads the sheet named <code>"ADB MRIO {year}"</code>, skipping the first four header rows and reading a fixed number of rows/columns (<code>nrows</code> and <code>usecols</code> depend on the variant).</p>
+</li>
+<li>
+<p><strong>Build country–sector labels</strong></p>
+</li>
+<li>The first two rows of the data area (country and sector headers) are combined into single labels of the form <code>"COUNTRY_SECTOR"</code>.</li>
+<li>The first two columns (row identifiers) are also combined into <code>"COUNTRY_SECTOR"</code> row labels.</li>
+<li>
+<p>Suffix <code>"_c"</code> in ADB labels is removed to obtain cleaner codes.</p>
+</li>
+<li>
+<p><strong>Clean structure and rename output column</strong></p>
+</li>
+<li>The first two header rows and the first two identifier columns are dropped.</li>
+<li>
+<p>The last column is renamed to <code>"OUT"</code>, interpreted as total output for each country–sector.</p>
+</li>
+<li>
+<p><strong>Infer MRIO dimensions</strong></p>
+</li>
+<li>A reference country (hard-coded as <code>"AUS"</code>) is used to infer:<ul>
+<li><code>S</code>: number of sectors per country, by counting how many rows belong to a specific country.</li>
+<li><code>SplusFD</code>: number of columns (intermediate + final demand) associated with a specific country.</li>
+<li><code>FD = SplusFD - S</code>: number of final-demand components per country.</li>
+</ul>
+</li>
+<li>
+<p>Given the total number of rows, the number of countries is computed as <code>C = n_rows / S</code>, and:</p>
+<ul>
+<li><code>CS = C × S</code>: number of country–sector pairs.</li>
+<li><code>CFD = C × FD</code>: number of country–final-demand columns.</li>
+</ul>
+</li>
+<li>
+<p><strong>Convert ADB country codes to ISO3 / ISO-like codes</strong></p>
+</li>
+<li>A fixed mapping from ADB internal codes (e.g. <code>"SWI"</code>, <code>"PRC"</code>, <code>"SPA"</code>) to ISO3 codes (<code>"CHE"</code>, <code>"CHN"</code>, <code>"ESP"</code>) is applied.</li>
+<li>Some codes correspond to regional aggregates (e.g. <code>"RoW"</code>, <code>"RoLAC"</code>), which are converted to stable labels (e.g. <code>"RoW"</code>, <code>"RoL"</code>) and treated as pseudo-ISO3 codes.</li>
+<li>
+<p>The mapping is applied to both column and row labels by replacing the leading code in each <code>"CODE_sector"</code> string.</p>
+</li>
+<li>
+<p><strong>Natural sorting and numeric conversion</strong></p>
+</li>
+<li>Columns are rearranged so that:<ul>
+<li>The first <code>CS</code> columns correspond to all country–sector intermediate-use blocks.</li>
+<li>These are followed by all final-demand columns.</li>
+<li>The final <code>"OUT"</code> column is kept as the last column.</li>
+</ul>
+</li>
+<li>Within each block, columns are ordered using “natural” sorting, so sector indices follow <code>1, 2, 3, 10, 11, …</code> instead of lexicographic order.</li>
+<li>The same logic is applied to the row dimension, if needed.</li>
+<li>
+<p>All entries are converted to numeric using <code>pandas.to_numeric(..., errors="coerce")</code>, turning any non-numeric “junk” into <code>NaN</code>.</p>
+</li>
+<li>
+<p><strong>Packaging results</strong></p>
+</li>
+<li>A dictionary is built with the cleaned matrix and the inferred dimensions (<code>C</code>, <code>S</code>, <code>FD</code>, <code>CS</code>, <code>CFD</code>), which can be directly used by other functions in the library (e.g. MRIO decomposition or value-added export calculations).</li>
+</ol>
+<hr />
+<p><strong>Returns</strong></p>
+<p><code>dict</code> with the following keys:</p>
+<ul>
+<li><code>"df"</code> : <code>pandas.DataFrame</code>
+  Cleaned ADB MRIO table with:</li>
+<li>Index: country–sector labels (e.g. <code>"DEU_1"</code>, <code>"ESP_15"</code>), after converting ADB codes to ISO3 / ISO-like codes.</li>
+<li>
+<p>Columns ordered as:</p>
+<ol>
+<li>All <code>CS</code> country–sector intermediate-use columns.</li>
+<li>All <code>CFD</code> final-demand columns.</li>
+<li>One total output column <code>"OUT"</code>.</li>
+</ol>
+</li>
+<li>
+<p><code>"C"</code> : <code>int</code>
+  Number of countries/regions in the MRIO table.</p>
+</li>
+<li>
+<p><code>"S"</code> : <code>int</code>
+  Number of sectors per country.</p>
+</li>
+<li>
+<p><code>"FD"</code> : <code>int</code>
+  Number of final-demand components per country.</p>
+</li>
+<li>
+<p><code>"CS"</code> : <code>int</code>
+  Total number of country–sector pairs (<code>C × S</code>).</p>
+</li>
+<li>
+<p><code>"CFD"</code> : <code>int</code>
+  Total number of country–final-demand pairs (<code>C × FD</code>).</p>
+</li>
+</ul>
+<hr />
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">intrade</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_ADB</span>
+
+<span class="c1"># Directory where the ADB MRIO Excel files are stored</span>
+<span class="n">adb_dir</span> <span class="o">=</span> <span class="s2">&quot;/path/to/ADB/files/&quot;</span>
+
+<span class="c1"># Example 1: Latin-American MRIO (LAC), year 2017</span>
+<span class="n">adb_lac_2017</span> <span class="o">=</span> <span class="n">load_ADB</span><span class="p">(</span><span class="n">dire</span><span class="o">=</span><span class="n">adb_dir</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="mi">2017</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span><span class="s2">&quot;LAC&quot;</span><span class="p">)</span>
+
+<span class="n">df_lac</span> <span class="o">=</span> <span class="n">adb_lac_2017</span><span class="p">[</span><span class="s2">&quot;df&quot;</span><span class="p">]</span>
+<span class="n">C_lac</span>  <span class="o">=</span> <span class="n">adb_lac_2017</span><span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">]</span>
+<span class="n">S_lac</span>  <span class="o">=</span> <span class="n">adb_lac_2017</span><span class="p">[</span><span class="s2">&quot;S&quot;</span><span class="p">]</span>
+<span class="n">FD_lac</span> <span class="o">=</span> <span class="n">adb_lac_2017</span><span class="p">[</span><span class="s2">&quot;FD&quot;</span><span class="p">]</span>
+
+<span class="c1"># Example 2: 62-region &quot;current&quot; MRIO (CUR-62), year 2018</span>
+<span class="n">adb_cur62_2018</span> <span class="o">=</span> <span class="n">load_ADB</span><span class="p">(</span><span class="n">dire</span><span class="o">=</span><span class="n">adb_dir</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="mi">2018</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span><span class="s2">&quot;CUR-62&quot;</span><span class="p">)</span>
+
+<span class="n">df_62</span>  <span class="o">=</span> <span class="n">adb_cur62_2018</span><span class="p">[</span><span class="s2">&quot;df&quot;</span><span class="p">]</span>
+<span class="n">C_62</span>   <span class="o">=</span> <span class="n">adb_cur62_2018</span><span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">]</span>
+<span class="n">S_62</span>   <span class="o">=</span> <span class="n">adb_cur62_2018</span><span class="p">[</span><span class="s2">&quot;S&quot;</span><span class="p">]</span>
+
+<span class="c1"># The returned df can be passed to downstream routines,</span>
+<span class="c1"># e.g. to construct a WIO dictionary or perform VA decomposition.</span>
+</code></pre></div>
+<hr />
+<p><strong>Notes</strong></p>
+<p>Implemented with the following with the following original files:</p>
+<p>Current 62:</p>
+<ul>
+<li>'ADB-MRIO-2000_Mar2022-3.xlsx',</li>
+<li>'ADB-MRIO-2007.xlsx',</li>
+<li>'ADB-MRIO-2008_Mar2022.xlsx', ... to 'ADB-MRIO-2016_Mar2022.xlsx',</li>
+<li>'ADB-MRIO62-2017_Dec2022.xlsx', ... to 'ADB-MRIO62-2019_Dec2022.xlsx',</li>
+<li>'ADB-MRIO62-2020_June2023.xlsx', ... to 'ADB-MRIO62-2022_June2023.xlsx',</li>
+</ul>
+<p>Current 72:</p>
+<ul>
+<li>'ADB-MRIO-2017_Dec2022-2.xlsx',</li>
+<li>'ADB-MRIO-2018_Dec2022.xlsx',</li>
+<li>'ADB-MRIO-2019_Dec2022.xlsx',</li>
+<li>'ADB-MRIO-2020_June2023.xlsx',</li>
+<li>'ADB-MRIO-2021_June2023.xlsx',</li>
+<li>'ADB-MRIO-2022_June2023.xlsx',</li>
+</ul>
+<p>LAC:</p>
+<ul>
+<li>'ADB-MRIO-LAC-2007_Mar2022-1.xlsx',</li>
+<li>'ADB-MRIO-LAC-2011_Mar2022.xlsx',</li>
+<li>'ADB-MRIO-LAC-2017_Mar2022-2.xlsx',</li>
+</ul>
+<hr />
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": "0.1.0"}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

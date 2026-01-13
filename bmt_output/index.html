@@ -1,0 +1,1286 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Gravity & Input–Output & Other Tools in Python">
+      
+      
+        <meta name="author" content="Juan José de Lucio (UAH); Francisco Requena (UV)">
+      
+      
+      
+        <link rel="prev" href="../bmt_trade/">
+      
+      
+        <link rel="next" href="../stream/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>BMT_output - InTrade Python library manual</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#bmt_output" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="InTrade Python library manual" class="md-header__button md-logo" aria-label="InTrade Python library manual" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            InTrade Python library manual
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              BMT_output
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="InTrade Python library manual" class="md-nav__button md-logo" aria-label="InTrade Python library manual" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    InTrade Python library manual
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intrade-package/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0- InTrade-package
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DLF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1- Data Loading Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../load_test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    load_Test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../load_adb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    load_ADB
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../load_eora/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    load_EORA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../load_figaro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    load_FIGARO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../load_gloria/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    load_GLORIA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../load_tiva/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    load_TIVA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../load_wiod/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    load_WIOD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aggregate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    aggregate
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2- Create Objects Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../obj_io/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    obj_IO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../obj_grav/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    obj_Grav
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../obj_grav_panel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    obj_Grav_panel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IOAF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.A- Input Output Analysis Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../KWW/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KWW
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WWZ/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WWZ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BM/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bmt_trade/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BMT_trade
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BMT_output
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../stream/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    stream
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GAF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.B- Gravity Analysis Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../struc_grav_cf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    struc_grav_cf
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../struc_grav_incre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    struc_grav_incre
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../struc_grav_asif/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    struc_grav_asif
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../struc_grav_inout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    struc_grav_inout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../grav_panel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    grav_panel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solve_system_Ti/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    solve_system_Ti
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<p><a id="bmt_output"></a></p>
+<h1 id="bmt_output">BMT_output<a class="headerlink" href="#bmt_output" title="Permanent link">&para;</a></h1>
+<hr />
+<p><strong>Description</strong></p>
+<p><code>BMT_output</code> implements the <strong>BMT2025 output-based tripartite GVC decomposition</strong> and returns a tidy table that decomposes <strong>gross output</strong> into domestic vs. trade-related components, including a tripartite split of the GVC-related part. Conceptually, the function decomposes each country’s (and optionally each country–sector’s) gross output <code>X</code> into:</p>
+<ul>
+<li><strong>DomX</strong>: output driven by <strong>domestic final demand</strong>,</li>
+<li><strong>GVC_X</strong>: output that is part of <strong>global value chain (GVC) activity</strong>,</li>
+<li><strong>TradX</strong>: residual “traditional” trade/output component (everything not explained by DomX or GVC_X),</li>
+</ul>
+<p>with <strong>GVC_X</strong> further decomposed into the BMT2025 tripartite components:</p>
+<ul>
+<li><strong>GVC_PF_X</strong>: pure forward GVC output,</li>
+<li><strong>GVC_TS_X</strong>: two-sided GVC output (with a split into imported vs. domestic propagation parts),</li>
+<li><strong>GVC_PB_X</strong>: pure backward GVC output.</li>
+</ul>
+<p>Unlike <code>BMT_trade</code>, this routine is <strong>not bilateral</strong>: it does not return exporter→importer pairs. Instead, it produces <strong>country totals</strong> and/or <strong>country×sector</strong> results, controlled by the <code>selector</code> argument. If <code>measures=True</code>, it also adds row-wise participation indicators (shares and a forwardness measure).</p>
+<hr />
+<p><strong>Usage</strong></p>
+<p><code>BMT_output(io, selector="all_all", measures=True)</code></p>
+<hr />
+<p><strong>Arguments</strong></p>
+<p><code>BMT_output(io, selector="all_all", measures=True)</code></p>
+<ul>
+<li>
+<p><code>io</code> : <code>dict</code>
+  InTrade IO dictionary (BM-style IO object). The function requires at least:</p>
+</li>
+<li>
+<p>Core arrays/matrices:</p>
+<ul>
+<li><code>"A"</code> : technical coefficients matrix, shape <code>(GN, GN)</code></li>
+<li><code>"B"</code> : global Leontief inverse, shape <code>(GN, GN)</code> (used for FVA-intensity terms)</li>
+<li><code>"Y"</code> : final demand by destination country, shape <code>(GN, G)</code></li>
+<li><code>"Z"</code> : intermediate flows, shape <code>(GN, GN)</code> (used to build export-to-foreign vectors)</li>
+<li><code>"X"</code> : gross output vector, shape <code>(GN,)</code></li>
+<li><code>"V"</code> : value-added coefficients vector, shape <code>(GN,)</code> (typically <code>VA/X</code>)</li>
+<li><code>"VA"</code> : value-added vector (optional here; kept for IO consistency)</li>
+</ul>
+</li>
+<li>
+<p>Names and dimensions (InTrade-style):</p>
+<ul>
+<li><code>io["names"]["c_names"]</code> : list of country names/codes (length <code>G</code>)</li>
+<li><code>io["names"]["s_names"]</code> : list of sector names/codes (length <code>N</code>)</li>
+<li><code>io["dims"]["C"]</code> : number of countries <code>G</code></li>
+<li><code>io["dims"]["S"]</code> : number of sectors per country <code>N</code></li>
+<li><code>io["dims"]["CS"]</code> : total country–sector accounts <code>GN = G×N</code></li>
+</ul>
+</li>
+<li>
+<p><code>selector</code> : <code>str</code>, default <code>"all_all"</code>
+  Output selector with format:</p>
+</li>
+</ul>
+<p><code>mode_granularity</code></p>
+<p>where:</p>
+<ul>
+<li><code>mode ∈ {"total","all"}</code></li>
+<li><code>granularity ∈ {"agg","sectoral","all"}</code></li>
+</ul>
+<p>Examples:</p>
+<ul>
+<li>
+<p><code>"total_agg"</code>
+    One row per country (sector = <code>"ALL"</code>).</p>
+</li>
+<li>
+<p><code>"total_sectoral"</code>
+    One row per country×sector.</p>
+</li>
+<li>
+<p><code>"all_all"</code>
+    Returns BOTH aggregated + sectoral rows in the same dataframe.</p>
+</li>
+</ul>
+<p><em>Note:</em> output-based BMT2025 has no bilateral dimension. The <code>mode</code> field is included mainly for consistency with <code>BMT_trade</code>; in this function, <code>total</code> and <code>all</code> behave equivalently.</p>
+<ul>
+<li>
+<p><code>measures</code> : <code>bool</code>, default <code>True</code>
+  If <code>True</code>, adds participation indicators computed <strong>row-wise</strong>:</p>
+</li>
+<li>
+<p><code>share_GVC_output</code> = <code>GVC_X / X</code></p>
+</li>
+<li><code>share_PF_output</code>  = <code>GVC_PF_X / GVC_X</code></li>
+<li><code>share_TS_output</code>  = <code>GVC_TS_X / GVC_X</code></li>
+<li><code>share_PB_output</code>  = <code>GVC_PB_X / GVC_X</code></li>
+<li><code>forward_output</code>   = <code>(GVC_PF_X − GVC_PB_X) / GVC_X</code></li>
+</ul>
+<hr />
+<p><strong>Details</strong></p>
+<ol>
+<li><strong>Selector parsing (reporting level)</strong></li>
+</ol>
+<p>The function reads <code>selector="mode_granularity"</code> and activates:</p>
+<ul>
+<li>aggregated country rows (<code>sector="ALL"</code>) if <code>granularity</code> includes <code>"agg"</code>,</li>
+<li>
+<p>country×sector rows if <code>granularity</code> includes <code>"sectoral"</code>.</p>
+</li>
+<li>
+<p><strong>Domestic Leontief inverses</strong></p>
+</li>
+</ul>
+<p>For each country <code>g</code>, a domestic Leontief inverse is computed:</p>
+<p><code>L_g = (I - A_gg)^{-1}</code></p>
+<p>where <code>A_gg</code> is the domestic block of <code>A</code> for country <code>g</code>. These domestic inverses are used repeatedly in the construction of the BMT2025 output terms.</p>
+<ol>
+<li><strong>Exports-to-foreign vector e_s*</strong></li>
+</ol>
+<p>A central building block is the exporter-sector vector of shipments to foreign users:</p>
+<p><code>e_s* = Z_s,foreign + Y_s,foreign</code></p>
+<p>computed as:</p>
+<ul>
+<li>row sums of intermediate flows from <code>s</code> to <strong>foreign sectors</strong>,</li>
+<li>plus row sums of final demand from <code>s</code> to <strong>foreign countries</strong>,</li>
+</ul>
+<p>implemented robustly with <code>np.ix_</code> to preserve 2D slices.</p>
+<ol>
+<li><strong>Precompute foreign-output propagation by country</strong></li>
+</ol>
+<p>For each country <code>r</code>, the function precomputes:</p>
+<p><code>Xexp_r = L_rr @ e_r*</code></p>
+<p>which represents domestic production in <code>r</code> needed to satisfy <code>r</code>’s shipments to foreign destinations. This is used inside the pure-forward term for every exporter <code>s</code>.</p>
+<ol>
+<li><strong>Tripartite GVC output decomposition</strong></li>
+</ol>
+<p>For each country <code>s</code> (and each sector within <code>s</code>), the function computes:</p>
+<ul>
+<li><strong>Pure forward (PF)</strong>: constructed as a sum over partner countries <code>r ≠ s</code>, combining direct cross-border propagation via <code>A_sr @ Xexp_r</code> and domestic amplification through <code>A_ss</code> and <code>L_ss</code>.</li>
+<li><strong>Pure backward (PB)</strong>: constructed from “foreign value-added intensity” terms, using:</li>
+<li>a <strong>global</strong> intensity component based on <code>v_j' B_js</code>,</li>
+<li>and a <strong>one-border</strong> adjustment based on <code>v_j' L_jj A_js L_ss</code>,
+  combined with total vs. domestic final demand (<code>Y_s_tot</code> and <code>Y_ss</code>).</li>
+<li><strong>Two-sided (TS)</strong>: defined as the remainder of GVC activity not accounted for by PF and PB, and split into:</li>
+<li><code>GVC_TSImp</code> : imported/intensity part,</li>
+<li><code>GVC_TSDom</code> : domestic propagation part,
+  with <code>GVC_TS_X = GVC_TSImp + GVC_TSDom</code>.</li>
+</ul>
+<p>Then:</p>
+<p><code>GVC_X = GVC_PF_X + GVC_PB_X + GVC_TS_X</code></p>
+<ol>
+<li><strong>Domestic output and residual traditional component</strong></li>
+</ol>
+<p>Domestic-demand-driven output is computed as:</p>
+<p><code>DomX = v_s * (L_ss @ Y_ss)</code></p>
+<p>and the residual traditional component is:</p>
+<p><code>TradX = X - DomX - GVC_X</code></p>
+<ol>
+<li><strong>Measures (optional row-wise shares and forwardness)</strong></li>
+</ol>
+<p>If <code>measures=True</code>, the function adds row-wise indicators summarizing GVC participation in output and the forward/backward balance.</p>
+<hr />
+<p><strong>Returns</strong></p>
+<p><code>pandas.DataFrame</code> always including:</p>
+<ul>
+<li><code>"mode"</code> : <code>"total"</code> (kept for consistency)</li>
+<li><code>"country"</code> : country label</li>
+<li><code>"sector"</code> : sector label or <code>"ALL"</code></li>
+</ul>
+<p>and decomposition columns:</p>
+<ul>
+<li><code>"X"</code> : gross output</li>
+<li><code>"DomX"</code> : output driven by domestic final demand</li>
+<li><code>"TradX"</code> : residual “traditional” component</li>
+<li><code>"GVC_PF_X"</code> : pure forward GVC output</li>
+<li><code>"GVC_PB_X"</code> : pure backward GVC output</li>
+<li><code>"GVC_TSImp"</code> : imported/intensity part of two-sided GVC output</li>
+<li><code>"GVC_TSDom"</code> : domestic propagation part of two-sided GVC output</li>
+<li><code>"GVC_TS_X"</code> : total two-sided GVC output</li>
+<li><code>"GVC_X"</code> : total GVC-related output</li>
+</ul>
+<p>If <code>measures=True</code>, also includes:</p>
+<ul>
+<li><code>"share_GVC_output"</code>, <code>"share_PF_output"</code>, <code>"share_TS_output"</code>, <code>"share_PB_output"</code>, <code>"forward_output"</code></li>
+</ul>
+<hr />
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">intrade</span><span class="w"> </span><span class="kn">import</span> <span class="n">BMT_output</span>
+
+<span class="c1"># io is an InTrade IO dictionary (e.g., produced by obj_IO / loaders)</span>
+
+<span class="c1"># Example 1: full output (country totals + country×sector)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">BMT_output</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="n">selector</span><span class="o">=</span><span class="s2">&quot;all_all&quot;</span><span class="p">,</span> <span class="n">measures</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Example 2: country totals only</span>
+<span class="n">tot</span> <span class="o">=</span> <span class="n">BMT_output</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="n">selector</span><span class="o">=</span><span class="s2">&quot;total_agg&quot;</span><span class="p">,</span> <span class="n">measures</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Example 3: country×sector only (no measures)</span>
+<span class="n">sec</span> <span class="o">=</span> <span class="n">BMT_output</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="n">selector</span><span class="o">=</span><span class="s2">&quot;total_sectoral&quot;</span><span class="p">,</span> <span class="n">measures</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tot</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sec</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</code></pre></div>
+<hr />
+<p><strong>Notes</strong></p>
+<p>The function assumes that countries are stored in contiguous blocks of size N in all country×sector arrays.</p>
+<p>B (the global Leontief inverse) is required to construct the foreign value-added intensity term used in the pure-backward component.</p>
+<p>Output-based BMT2025 has no bilateral dimension; results are reported as country totals and/or country×sector rows.</p>
+<hr />
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": "0.1.0"}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

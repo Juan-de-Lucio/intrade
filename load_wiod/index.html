@@ -1,0 +1,1291 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Gravity & Input–Output & Other Tools in Python">
+      
+      
+        <meta name="author" content="Juan José de Lucio (UAH); Francisco Requena (UV)">
+      
+      
+      
+        <link rel="prev" href="../load_tiva/">
+      
+      
+        <link rel="next" href="../aggregate/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>load_WIOD - InTrade Python library manual</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#load_wiod" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="InTrade Python library manual" class="md-header__button md-logo" aria-label="InTrade Python library manual" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            InTrade Python library manual
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              load_WIOD
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="InTrade Python library manual" class="md-nav__button md-logo" aria-label="InTrade Python library manual" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    InTrade Python library manual
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intrade-package/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0- InTrade-package
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DLF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1- Data Loading Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../load_test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    load_Test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../load_adb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    load_ADB
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../load_eora/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    load_EORA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../load_figaro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    load_FIGARO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../load_gloria/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    load_GLORIA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../load_tiva/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    load_TIVA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    load_WIOD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aggregate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    aggregate
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2- Create Objects Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../obj_io/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    obj_IO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../obj_grav/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    obj_Grav
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../obj_grav_panel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    obj_Grav_panel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IOAF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.A- Input Output Analysis Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../KWW/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KWW
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WWZ/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WWZ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BM/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bmt_trade/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BMT_trade
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bmt_output/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BMT_output
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../stream/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    stream
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GAF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3.B- Gravity Analysis Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../struc_grav_cf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    struc_grav_cf
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../struc_grav_incre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    struc_grav_incre
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../struc_grav_asif/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    struc_grav_asif
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../struc_grav_inout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    struc_grav_inout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../grav_panel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    grav_panel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solve_system_Ti/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    solve_system_Ti
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<p><a id="load_wiod"></a></p>
+<h1 id="load_wiod">load_WIOD<a class="headerlink" href="#load_wiod" title="Permanent link">&para;</a></h1>
+<hr />
+<p><strong>Description</strong></p>
+<p><code>load_WIOD</code> reads a <strong>WIOD</strong> inter-country input–output (WIOT) table for a given year and infers the main MRIO dimensions:</p>
+<ul>
+<li>number of countries/regions,</li>
+<li>number of sectors per country,</li>
+<li>number of final-demand components per country,</li>
+<li>and the derived country–sector and country–final-demand dimensions.</li>
+</ul>
+<p>The function is currently implemented for the <strong>WIOD 2016</strong> release in Stata (<code>.dta</code>) format, using the <strong>ROW-extended</strong> tables (<code>*_ROW.dta</code>). It:</p>
+<ol>
+<li>Reads the WIOT for the requested year.</li>
+<li>Builds country–sector row labels of the form <code>"ISO3_sectorIndex"</code> from the WIOD <code>Country</code> and <code>RNr</code> fields.</li>
+<li>Renames flow columns in a similar <code>"ISO3_sectorIndex"</code> style (e.g. <code>"USA_1"</code>, <code>"DEU_5"</code>).</li>
+<li>Uses a reference country (<code>USA</code>) to infer:</li>
+<li>sectors per country (<code>S</code>),</li>
+<li>final-demand components per country (<code>FD</code>),</li>
+<li>total countries (<code>C</code>),</li>
+<li>and the composite dimensions (<code>CS</code>, <code>CFD</code>).</li>
+</ol>
+<p>The result is a convenient dictionary containing both the IO table (<code>df</code>) and its basic structural dimensions.</p>
+<hr />
+<p><strong>Usage</strong></p>
+<p><code>load_WIOD(dire, year, typ)</code></p>
+<hr />
+<p><strong>Arguments</strong></p>
+<p><code>load_WIOD(dire, year, typ)</code></p>
+<ul>
+<li><code>dire</code> : <code>str</code> or <code>pathlib.Path</code>
+  Base directory where the WIOD files are stored. It <strong>must</strong> include the trailing separator, for example:
+  ```text
+  "/path/to/WIOD/"
+The function internally expects to find the Stata file in:</li>
+</ul>
+<p><code>dire + "WIOD 2016\\WIOT{year}_October16_ROW.dta"</code>
+year : int
+Reference year of the WIOT to load. For the WIOD 2016 release this typically covers 2000–2014 (plus some earlier/later years depending on the specific dataset).</p>
+<p>typ : {"WIOD 2016", "WIOD 2013", "Long-run"}
+Type of WIOD dataset. Currently, only:</p>
+<p><code>typ = "WIOD 2016"</code>
+is implemented in this function. Other values preserve the original behaviour (and will fail due to the absence of a defined df).</p>
+<hr />
+<p><strong>Details</strong></p>
+<ol>
+<li><strong>Load WIOD 2016 table from Stata</strong></li>
+</ol>
+<p>For <code>typ == "WIOD 2016"</code> the function reads the WIOT from a Stata file:</p>
+<p><code>df = pd.read_stata(dire + "WIOD 2016\\WIOT" + str(year) + "_October16_ROW.dta")</code></p>
+<p>The original WIOD 2016 WIOT*_ROW.dta file typically contains the following columns (among others):</p>
+<ul>
+<li>IndustryCode</li>
+<li>IndustryDescription</li>
+<li>Country (3-letter WIOD country code, ISO3-like)</li>
+<li>RNr (row number, used to distinguish sectors/rows)</li>
+<li>Year</li>
+<li>
+<p>vXXXYY columns for flows (e.g. vUSA01, vDEU12, …) and final demand.</p>
+</li>
+<li>
+<p><strong>Build the row index</strong></p>
+</li>
+</ul>
+<p>The row index is constructed as: <code>df = df.set_index(df["Country"] + "_" + df["RNr"].astype(str))</code>
+giving labels such as:</p>
+<p>"USA_1", "USA_2", …, "DEU_1", "DEU_2", …</p>
+<p>This index approximates country–sector accounts, with RNr representing the sector index within each country.</p>
+<ol>
+<li><strong>Drop metadata / non-flow columns</strong></li>
+</ol>
+<p>The following metadata columns are removed from the IO matrix: <code>df = df.drop(columns=["IndustryCode", "IndustryDescription", "Country", "RNr", "Year"])</code></p>
+<p>The remaining columns correspond to flows (intermediate and final demand), usually prefixed with "v".</p>
+<ol>
+<li><strong>Clean column names and convert them to "ISO3_sectorIndex"</strong></li>
+</ol>
+<p>WIOD 2016 uses column names like "vUSA01", "vDEU12", etc. The function:</p>
+<p>Removes the leading 'v' (if present): <code>df = df.rename(columns=lambda x: x[1:] if isinstance(x, str) and x.startswith("v")else x)</code></p>
+<ol>
+<li>
+<p><strong>Splits them into "ISO3_sectorIndex"</strong> using:<code>df.columns = [col[:3] + "_" + col[3:] for col in df.columns]</code>
+So:</p>
+</li>
+<li>
+<p>"vUSA01" → "USA01" → "USA_01",</p>
+</li>
+<li>
+<p>"vDEU14" → "DEU14" → "DEU_14", etc.</p>
+</li>
+</ol>
+<p>This ensures that both rows and columns follow a country–sector index pattern, facilitating subsequent processing into WIO structures.</p>
+<ol>
+<li><strong>Infer number of sectors (S) and final-demand components (FD)</strong></li>
+</ol>
+<p>A reference country (ref = "USA") is used to infer structural dimensions:</p>
+<ul>
+<li>Number of sectors S</li>
+<li>Count how many rows belong to USA when looking across origin-side sectors: <code>S = int(df.T.filter(like="USA").shape[1])</code></li>
+<li>Total columns for USA (sectors + FD)</li>
+<li>Count how many columns correspond to USA: <code>SplusFD = int(df.filter(like="USA").shape[1])</code></li>
+<li>
+<p>FD = SplusFD - S . FD is the number of final-demand components per country.</p>
+</li>
+<li>
+<p><strong>Account for additional rows (aggregates, totals, etc.)</strong></p>
+</li>
+</ul>
+<p>WIOD IO tables include some extra rows that are not part of the country–sector block (e.g. totals, adjustments). The function assumes: <code>filas_adic = 8</code>
+additional rows beyond the C × S core.</p>
+<ol>
+<li><strong>Compute number of countries and composite dimensions</strong></li>
+</ol>
+<p>With: <code>n_rows = df.shape[0]</code> the number of countries is:</p>
+<p><div class="highlight"><pre><span></span><code><span class="n">C</span>   <span class="o">=</span> <span class="p">(</span><span class="n">n_rows</span> <span class="o">-</span> <span class="n">filas_adic</span><span class="p">)</span> <span class="o">/</span> <span class="n">S</span>
+<span class="n">CS</span>  <span class="o">=</span> <span class="n">C</span> <span class="o">*</span> <span class="n">S</span>     <span class="c1"># total country–sector combinations</span>
+<span class="n">CFD</span> <span class="o">=</span> <span class="n">C</span> <span class="o">*</span> <span class="n">FD</span>    <span class="c1"># total country–final-demand combinations</span>
+</code></pre></div>
+Basic checks are printed to the console:
+<code>print("Year:", year, "\nFile:", "WIOD\\WIOT" + str(year) + "_October16_ROW")</code>
+<code>print("\n Num Countries", C, "\n Num sect", S, "\n Num components FD", FD)</code></p>
+<ol>
+<li><strong>The function returns a dictionary:</strong></li>
+</ol>
+<p><div class="highlight"><pre><span></span><code><span class="n">dic</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;df&quot;</span><span class="p">:</span> <span class="n">df</span><span class="p">,</span>
+    <span class="s2">&quot;C&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">C</span><span class="p">),</span>
+    <span class="s2">&quot;S&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">S</span><span class="p">),</span>
+    <span class="s2">&quot;FD&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">FD</span><span class="p">),</span>
+    <span class="s2">&quot;CS&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">CS</span><span class="p">),</span>
+    <span class="s2">&quot;CFD&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">CFD</span><span class="p">),</span>
+<span class="p">}</span>
+</code></pre></div>
+which can be directly used to build a wio structure or to feed value-added decomposition routines.</p>
+<hr />
+<p><strong>Returns</strong></p>
+<p>dict with:</p>
+<ul>
+<li>
+<p>"df" : pandas.DataFrame
+  WIOD IO table with:</p>
+</li>
+<li>
+<p>Rows: country–sector-like accounts, indexed as "ISO3_sectorIndex"
+  (plus ~8 additional rows for aggregates/totals).</p>
+</li>
+<li>
+<p>Columns: country–sector blocks and final-demand columns, all named as "ISO3_sectorIndex" (e.g. "USA_1", "DEU_5", etc.).</p>
+</li>
+<li>
+<p>"C" : int
+Number of countries/regions in WIOD (including the rest-of-world entry, ROW).</p>
+</li>
+<li>
+<p>"S" : int
+Number of sectors per country.</p>
+</li>
+<li>
+<p>"FD" : int
+Number of final-demand components per country.</p>
+</li>
+<li>
+<p>"CS" : int
+Total number of country–sector combinations (C × S).</p>
+</li>
+<li>
+<p>"CFD" : int
+Total number of country–final-demand combinations (C × FD).</p>
+</li>
+</ul>
+<hr />
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">intrade</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_WIOD</span>
+
+<span class="c1"># Base directory where WIOD 2016 files are stored</span>
+<span class="n">wiod_dir</span> <span class="o">=</span> <span class="s2">&quot;D:/MRIO/WIOD/&quot;</span>
+
+<span class="c1"># Example 1: Load WIOD 2016 table for year 2010</span>
+<span class="n">wiod_2010</span> <span class="o">=</span> <span class="n">load_WIOD</span><span class="p">(</span><span class="n">dire</span><span class="o">=</span><span class="n">wiod_dir</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="mi">2010</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span><span class="s2">&quot;WIOD 2016&quot;</span><span class="p">)</span>
+
+<span class="n">df_wiod</span> <span class="o">=</span> <span class="n">wiod_2010</span><span class="p">[</span><span class="s2">&quot;df&quot;</span><span class="p">]</span>
+<span class="n">C</span>       <span class="o">=</span> <span class="n">wiod_2010</span><span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">]</span>
+<span class="n">S</span>       <span class="o">=</span> <span class="n">wiod_2010</span><span class="p">[</span><span class="s2">&quot;S&quot;</span><span class="p">]</span>
+<span class="n">FD</span>      <span class="o">=</span> <span class="n">wiod_2010</span><span class="p">[</span><span class="s2">&quot;FD&quot;</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">df_wiod</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># (rows, cols) including aggregates</span>
+
+<span class="c1"># Example 2: Extract only country–sector rows (excluding extra rows)</span>
+<span class="n">CS</span> <span class="o">=</span> <span class="n">wiod_2010</span><span class="p">[</span><span class="s2">&quot;CS&quot;</span><span class="p">]</span>
+<span class="n">df_core</span> <span class="o">=</span> <span class="n">df_wiod</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="n">CS</span><span class="p">,</span> <span class="p">:]</span>   <span class="c1"># first C*S rows as core MRIO block</span>
+
+<span class="c1"># Example 3: Subset USA as exporter (rows starting with &quot;USA_&quot;)</span>
+<span class="n">usa_rows</span> <span class="o">=</span> <span class="p">[</span><span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">df_wiod</span><span class="o">.</span><span class="n">index</span> <span class="k">if</span> <span class="n">idx</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;USA_&quot;</span><span class="p">)]</span>
+<span class="n">df_usa</span>   <span class="o">=</span> <span class="n">df_wiod</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">usa_rows</span><span class="p">,</span> <span class="p">:]</span>
+
+<span class="c1"># The resulting df_wiod can then be converted into a WIO dictionary:</span>
+<span class="c1">#   wio = make_wio_from_df(df_core, C=C, S=S, FD=FD)</span>
+<span class="c1"># and used for standard value-added export decompositions.</span>
+</code></pre></div>
+<hr />
+<p><strong>Notes</strong></p>
+<p>Implemented using the WIOD 2016 release. The program reads the files WIOT2000_October16_ROW.dta ... to WIOT2014_October16_ROW.dta from the WIOTS_in_STATA.zip archive.</p>
+<hr />
+<hr style="border:1px solid blue; margin-top: 0; margin-bottom: 0;">
+
+<div id=" " style="font-size:50px; text-align:center; padding:10px 0; margin:0;">
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": "0.1.0"}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
